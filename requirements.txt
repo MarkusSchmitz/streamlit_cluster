@@ -1,0 +1,6 @@
+streamlit
+aleph-alpha-client
+pandas
+scikit-learn
+plotly
+numpy
