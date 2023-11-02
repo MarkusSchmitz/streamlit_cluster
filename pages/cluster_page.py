@@ -110,7 +110,7 @@ if st.text_input("password", type="password") == os.getenv("PASSWORD"):
             fig.add_scatter(x=centroids["x"], y=centroids["y"], mode="markers", marker=dict(color="black", size=20))
 
             st.plotly_chart(fig)
-
+            """
             # do the same with tsne
             from sklearn.manifold import TSNE
 
@@ -129,6 +129,7 @@ if st.text_input("password", type="password") == os.getenv("PASSWORD"):
             fig.add_scatter(x=centroids["x"], y=centroids["y"], mode="markers", marker=dict(color="black", size=20))
 
             st.plotly_chart(fig)
+            """
 
     else:
         st.info("Not enough data to cluster yet, please wait for more data to be added")
