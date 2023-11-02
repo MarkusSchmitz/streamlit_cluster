@@ -2,6 +2,8 @@ import streamlit as st
 from dotenv import load_dotenv
 import os
 
+load_dotenv()
+
 st.set_page_config(
     page_title="Entry",
     page_icon="👋",
@@ -40,7 +42,8 @@ Please be mindful of what you enter.
 
 #st.image("qr.png")
 
-if st.text_input("Clear Data", type="password") == "ITM2023/24":
+
+if st.text_input("Clear Data", type="password") == os.getenv("CLEAR_PASSWORD"):
     with open("data.json", "w") as f:
         f.write("[]")
     st.success("Data cleared")
