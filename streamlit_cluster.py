@@ -130,7 +130,7 @@ with cluster_analysis:
         embeddings = np.array([d["embedding"] for d in data])
 
         # get the number of clusters
-        n_clusters = st.slider("Number of Clusters", min_value=2, max_value=10, value=2, step=1)
+        n_clusters = st.slider("Number of Clusters", min_value=2, max_value=10, value=5, step=1)
 
         # cluster the data
         kmeans = KMeans(n_clusters=n_clusters)
@@ -191,5 +191,31 @@ with cluster_analysis:
 
         # display the clusters
         fig = px.scatter(df, x="x", y="y", color="cluster", hover_data=["name", "cluster"])
+
+        # plot the centroids
+        centroids_reduced = pca.transform(kmeans.cluster_centers_)
+        centroids = pd.DataFrame(centroids_reduced, columns=["x", "y"])        
+
+        fig.add_scatter(x=centroids["x"], y=centroids["y"], mode="markers", marker=dict(color="black", size=20))
+
+        st.plotly_chart(fig)
+
+        # do the same with tsne
+        from sklearn.manifold import TSNE
+
+        tsne = TSNE(n_components=2)
+        positions = tsne.fit_transform(embeddings).tolist()
+        df["x"] = [p[0] for p in positions]
+        df["y"] = [p[1] for p in positions]
+
+        # display the clusters
+        fig = px.scatter(df, x="x", y="y", color="cluster", hover_data=["name", "cluster"])
+
+        # plot the centroids
+        centroids_reduced = tsne.transform(kmeans.cluster_centers_)
+        centroids = pd.DataFrame(centroids_reduced, columns=["x", "y"])
+
+        fig.add_scatter(x=centroids["x"], y=centroids["y"], mode="markers", marker=dict(color="black", size=20))
+
         st.plotly_chart(fig)
 
